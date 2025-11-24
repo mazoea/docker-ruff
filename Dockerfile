@@ -1,8 +1,13 @@
 FROM python:3-alpine
 
-WORKDIR /opt/src/
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir ruff && \
+    rm -rf /root/.cache
 
-RUN pip install --no-cache-dir -U ruff
+WORKDIR /opt/src/
+RUN adduser -D maz
+USER maz
+
 
 ENTRYPOINT [ "ruff" ]
 CMD [ "--version" ]
